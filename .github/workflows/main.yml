@@ -47,14 +47,14 @@ jobs:
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=QUIDA5V_qualityAnalysis
 
       # SonarQube Scan
-      - name: SonarQube Scan
-        uses: SonarSource/sonarcloud-github-action@v2
-        with:
-          args: >
-            -Dsonar.projectKey=qualityAnalysis
-            -Dsonar.organization=quida5v
-            -Dsonar.host.url=https://sonarcloud.io
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      #- name: SonarQube Scan
+      #  uses: SonarSource/sonarcloud-github-action@v2
+      #  with:
+      #    args: >
+      #      -Dsonar.projectKey=qualityAnalysis
+      #      -Dsonar.organization=quida5v
+      #      -Dsonar.host.url=https://sonarcloud.io
+      #      -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       # Optionally update GitHub Commit Status (if not handled by tools)
       - name: Update Build Status
@@ -62,3 +62,15 @@ jobs:
         run: |
           echo "Build completed with status ${{ job.status }}"
           # You can use GitHub's REST API or Actions to update commit status
+
+      - name: Set commit status
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
+            -d '{
+              "state": "success",
+              "description": "Tests passed",
+              "context": "ci/github-actions"
+            }'
