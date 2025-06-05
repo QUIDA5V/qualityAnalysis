@@ -1,0 +1,44 @@
+name: Java Quality Analysis
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  security-analysis:
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Run Tests
+        run:
+          mvn test
+          ##working-directory: pic
+
+      - name: Build Project
+        run: mvn clean package -DskipTests=true
+
+      # SonarQube Scan
+      - name: SonarQube Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          args: >
+            -Dsonar.projectKey=qualityAnalysis
+            -Dsonar.organization=quida5v
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
+      # Optionally update GitHub Commit Status (if not handled by tools)
+      - name: Update Build Status
+        if: always()
+        run: |
+          echo "Build completed with status ${{ job.status }}"
+          # You can use GitHub's REST API or Actions to update commit status
