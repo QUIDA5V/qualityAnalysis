@@ -80,3 +80,20 @@ jobs:
             "description": "All checks passed",
             "target_url": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           }'
+
+      - name: Set build status success2
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: '${{ github.sha }}',
+              state: 'success',
+              context: 'Reusable Build',
+              description: '✅ Build and tests passed',
+              target_url: 'https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}'
+            });
