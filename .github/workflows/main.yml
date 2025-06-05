@@ -26,6 +26,9 @@ jobs:
       - name: Build Project
         run: mvn clean package -DskipTests=true
 
+      - name: Use secret
+        run: echo "Secret is ${{ secrets.SONAR_TOKEN }}"
+
       # SonarQube Scan
       - name: SonarQube Scan
         uses: SonarSource/sonarcloud-github-action@v2
