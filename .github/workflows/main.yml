@@ -52,7 +52,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=quida5v
-            -Dsonar.projectKey=QUIDA5V_qualityAnalysis
+            -Dsonar.projectKey=quida5v_qualityAnalysis
           #-Dsonar.branch.name=main
 
           #-Dsonar.host.url=https://sonarcloud.io
