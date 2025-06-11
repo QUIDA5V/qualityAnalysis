@@ -46,6 +46,16 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      # --- SonarQube Scan ---
+      - name: SonarQube Scan
+        uses: SonarSource/sonarcloud-github-action@v2
+        with:
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonar.io
+          SONAR_PROJECT_KEY: qualityAnalysis
+
       #- name: Build and analyze
       #  env:
       #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -67,6 +77,23 @@ jobs:
         run: |
           echo "Build completed with status ${{ job.status }}"
           # You can use GitHub's REST API or Actions to update commit status
+
+      # --- Set Build Status to GitHub ---
+      - name: Set GitHub Commit Status
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          STATUS="success"
+          if [[ "${{ job.status }}" != "success" ]]; then
+            STATUS="failure"
+          fi
+
+          curl -s -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"state\": \"$STATUS\", \"context\": \"Quality Analysis\", \"description\": \"Checkmarx, SonarQube & Dependency checks\"}" \
+            https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }}
 
       - name: Set commit status to success
         if: success() ## Only run this step if the job succeeds
