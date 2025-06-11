@@ -48,7 +48,7 @@ jobs:
 
       # --- SonarQube Scan ---
       - name: SonarQube Scan
-        uses: SonarSource/sonarcloud-github-action@v2
+        uses: SonarSource/sonarcloud-github-action@master
         with:
           args: >
             -Dsonar.projectKey=qualityAnalysis
