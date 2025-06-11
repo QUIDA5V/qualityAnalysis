@@ -55,13 +55,13 @@ jobs:
             -Dsonar.organization=quida5v
           #-Dsonar.host.url=https://sonarcloud.io
           #-Dsonar.login=${{ secrets.SONAR_TOKEN }}
-          #projectBaseDir: .
+          ##projectBaseDir: .
           #organization: QUIDA5V
           #projectKey: myorganizati0nkey
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonar.io
-          SONAR_PROJECT_KEY: qualityAnalysis
+          #SONAR_HOST_URL: https://sonar.io
+          #SONAR_PROJECT_KEY: qualityAnalysis
 
       #- name: Build and analyze
       #  env:
