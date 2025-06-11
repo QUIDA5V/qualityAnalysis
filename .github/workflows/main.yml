@@ -69,7 +69,7 @@ jobs:
           # You can use GitHub's REST API or Actions to update commit status
 
       - name: Set commit status to success
-        if: success() # Only run this step if the job succeeds
+        if: success() ## Only run this step if the job succeeds
         run: |
           curl -s -X POST https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
