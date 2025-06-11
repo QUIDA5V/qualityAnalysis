@@ -50,9 +50,14 @@ jobs:
       - name: SonarQube Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
-          projectBaseDir: .
-          organization: QUIDA5V
-          projectKey: myorganizati0nkey
+          args: >
+            -Dsonar.projectKey=qualityAnalysis
+            -Dsonar.organization=quida5v
+          #-Dsonar.host.url=https://sonarcloud.io
+          #-Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          #projectBaseDir: .
+          #organization: QUIDA5V
+          #projectKey: myorganizati0nkey
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonar.io
