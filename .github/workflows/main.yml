@@ -33,26 +33,26 @@ jobs:
       - name: Use secret
         run: echo "Secret is ${{ secrets.SONAR_TOKEN }}"
 
-      - name: Cache SonarQube packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache Maven packages
-        uses: actions/cache@v4
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+      #- name: Cache SonarQube packages
+      #  uses: actions/cache@v4
+      #  with:
+      #    path: ~/.sonar/cache
+      #    key: ${{ runner.os }}-sonar
+      #    restore-keys: ${{ runner.os }}-sonar
+      #- name: Cache Maven packages
+      #  uses: actions/cache@v4
+      #  with:
+      #    path: ~/.m2
+      #    key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+      #    restore-keys: ${{ runner.os }}-m2
 
       # --- SonarQube Scan ---
       - name: SonarQube Scan
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           args: >
-            -Dsonar.projectKey=qualityAnalysis
             -Dsonar.organization=quida5v
+            -Dsonar.projectKey=qualityAnalysis
             -Dsonar.branch.name=main
 
           #-Dsonar.host.url=https://sonarcloud.io
@@ -62,8 +62,8 @@ jobs:
           #projectKey: myorganizati0nkey
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          #SONAR_HOST_URL: https://sonar.io
-          #SONAR_PROJECT_KEY: qualityAnalysis
+          SONAR_HOST_URL: https://sonar.io
+          SONAR_PROJECT_KEY: qualityAnalysis
 
       #- name: Build and analyze
       #  env:
