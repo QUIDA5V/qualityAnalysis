@@ -51,7 +51,7 @@ jobs:
         uses: SonarSource/sonarcloud-github-action@v2
         with:
           projectBaseDir: .
-          organization: my_organization_name
+          organization: quida5v
           projectKey: qualityAnalysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
