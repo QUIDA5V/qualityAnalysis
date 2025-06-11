@@ -61,7 +61,7 @@ jobs:
       #      -Dsonar.host.url=https://sonarcloud.io
       #      -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
-      # Optionally update GitHub Commit Status (if not handled by tools)
+      ## Optionally update GitHub Commit Status (if not handled by tools)
       - name: Update Build Status
         if: always()
         run: |
