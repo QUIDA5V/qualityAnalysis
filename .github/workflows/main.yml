@@ -3,6 +3,11 @@ name: Java Quality Analysis
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    branches:
+      - main
+      - dev
+      - release/*
 
 permissions:
   contents: read
